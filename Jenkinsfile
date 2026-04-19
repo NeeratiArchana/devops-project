@@ -13,5 +13,13 @@ pipeline {
                 sh 'docker build -t neeratiarchana/myapp .'
             }
         }
+	stage('Push to Docker Hub') {
+            steps {
+                sh '''
+                echo "YOUR_DOCKER_PASSWORD" | docker login -u NeeratiArchana --password-stdin
+                docker push neeratiarchana/myapp
+                '''
+            }
+	}	
     }
 }
