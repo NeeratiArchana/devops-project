@@ -14,12 +14,18 @@ pipeline {
             }
         }
 	stage('Push to Docker Hub') {
-            steps {
-                sh '''
-                echo "YOUR_DOCKER_PASSWORD" | docker login -u NeeratiArchana --password-stdin
-                docker push neeratiarchana/myapp
-                '''
-            }
-	}	
-    }
+ 	    steps {
+        	withCredentials([usernamePassword(
+            	    credentialsId: 'docker-creds',
+            	    usernameVariable: 'DOCKER_USER',
+            	    passwordVariable: 'DOCKER_PASS'
+        	)]) {
+            	    sh '''
+            	    echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+            	    docker push neeratiarchana/myapp
+            	    '''
+        	}
+    	    }
+	
+        }
 }
