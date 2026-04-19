@@ -15,5 +15,6 @@ spec:
       containers:
       - name: myapp
         image: neeratiarchana/myapp:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
